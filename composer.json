@@ -1,0 +1,34 @@
+{
+    "name": "pctco/php",
+    "type": "project",
+    "keywords": ["php"],
+    "homepage": "https://pctco.com",
+    "license": "MIT",
+    "description": "...",
+    "authors": [
+        {
+            "name": "pctco",
+            "email": "pctco.com@gmail.com",
+            "homepage": "https://pctco.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "pctco.com@gmail.com",
+        "issues": "https://github.com/pctcocom/php/issues",
+        "forum": "https://pctco.com",
+        "source": "https://github.com/pctcocom/php"
+    },
+    "require": {
+        "php": ">=7.1"
+    },
+    "suggest": {
+        "ext-event": "..."
+    },
+    "autoload": {
+        "psr-4": {
+            "Pctco\\php\\": "src"
+        }
+    },
+    "minimum-stability": "0.1.0"
+}
