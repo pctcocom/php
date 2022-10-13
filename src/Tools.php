@@ -1,6 +1,6 @@
 <?php
-namespace Pctco\Php;
-class Tools{
+namespace pctco\php;
+class tools{
    function __construct($config = []){
       
    }

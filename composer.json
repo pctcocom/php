@@ -20,14 +20,14 @@
         "source": "https://github.com/pctcocom/php"
     },
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.2"
     },
     "suggest": {
         "ext-event": "..."
     },
     "autoload": {
         "psr-4": {
-            "Pctco\\php\\": "src"
+            "pctco\\php\\": "src"
         }
     },
     "minimum-stability": "dev"
