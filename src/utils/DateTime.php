@@ -1,6 +1,6 @@
 <?php
-namespace pctco\helper\utils;
-class Str{
+namespace pctco\php\helper\utils;
+class DateTime{
     public function send(){
         return false;
     }
