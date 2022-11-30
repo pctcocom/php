@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "pctco\\php\\": "src"
+            "Pctco\\Php\\": "src"
         }
     },
     "minimum-stability": "dev"
