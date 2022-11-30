@@ -1,5 +1,5 @@
 <?php
-namespace Pctco\Helper\Utils;
+namespace pctco\helper\utils;
 class Arr{
     public function send(){
         return false;
