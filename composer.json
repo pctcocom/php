@@ -29,6 +29,5 @@
         "psr-4": {
             "pctco\\php\\": "src"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
