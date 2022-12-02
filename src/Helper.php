@@ -7,7 +7,8 @@ class Helper{
       $AllClasses = [
          'utils' => [
             'Arr' => $utilsArr,
-            'Str' => new \pctco\php\utils\Str
+            'Str' => new \pctco\php\utils\Str,
+            'Date' => new \pctco\php\utils\Date
          ]
       ];
 
