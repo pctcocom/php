@@ -13,4 +13,15 @@ class Arr {
     public function contains(array $array, $value): bool {
 		return in_array($value, $array, true);
 	}
+	public function findLadderNode(array $array,$node){
+
+		if (is_string($node)) $node = explode('::',$node);
+
+		if (empty($node)) return $this->obj($array);
+		foreach ($node as $kn => $vn) {
+			unset($node[$kn]);
+			if (empty($array[$vn])) return false;
+			return $this->findLadderNode($array[$vn],$node);
+		}
+	}
 }
