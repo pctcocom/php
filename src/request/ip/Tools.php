@@ -38,11 +38,12 @@ class Tools{
                 } 
             }
 
-            return [
+            return Helper::utilsArr()->obj([
+                'ip'    =>  $ip,
                 'arr' =>  $arr,
                 'str'    =>  $str,
                 'is'  =>  $isResult
-            ];
+            ]);
         }
 
         return [];
