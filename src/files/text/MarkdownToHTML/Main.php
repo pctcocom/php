@@ -1823,7 +1823,6 @@ class Main{
                                 $markup = $markup.str_replace(array_keys($replace),array_values($replace),$adModelTemplate);
                             }
                             
-
                             unset($this->config->ad['keys'][0]);
                             $this->config->ad['keys'] = array_values($this->config->ad['keys']);
                         }
