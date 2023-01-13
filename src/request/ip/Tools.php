@@ -5,7 +5,7 @@ class Tools{
     public function __construct(){
         $this->config = Helper::config('get::request::ip');
 	}
-    public function data(string $ip = '127.0.0.1',array $is = [],string $spacer = '/') :Array {
+    public function data(string $ip = '127.0.0.1',array $is = [],string $spacer = '/') :object {
 
         $nlname = ['country','province','city'];
         
