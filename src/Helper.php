@@ -1,9 +1,9 @@
 <?php
 namespace pctco\php;
-use pctco\php\utils\Arr;
 class Helper{
+   public static $_pctco;
    public static function utilsArr(){
-      return new Arr;
+      return new utils\Arr;
    }
    public static function dataPath(string $json,string $dataType = 'path',array $data = []){
       $filePath = dirname(__DIR__,4).'/data/json/'.$json;
@@ -12,12 +12,23 @@ class Helper{
       if ($dataType === 'save-json') file_put_contents($filePath,json_encode($data));
    }
    public static function pctco(array $array){
+      $app = new App;
       $utilsArr = self::utilsArr();
       $AllClasses = [
          'utils' => [
             'Arr' => $utilsArr,
             'Str' => new \pctco\php\utils\Str,
             'Date' => new \pctco\php\utils\Date
+         ],
+         'request'  => [
+            'ip'  => new \pctco\php\request\ip\Tools,
+         ],
+         'files'  => new \pctco\php\files\Tools,
+         'safety' => [
+            'algorithm'  => new \pctco\php\safety\algorithm\Tools,
+         ],
+         'orm'  => [
+            'redis'  => new \pctco\php\orm\redis\Tools,
          ],
          'api' => [
             'baidu'   => [
@@ -26,7 +37,13 @@ class Helper{
          ]
       ];
 
-      $pctco = [];
+      $pctco = [
+         'app' => [
+            'path'   => [
+               'root'   => $app->getRootPath
+            ]
+         ]
+      ];
       foreach ($array as $key => $value) {
          if (is_array($value)) {
             foreach ($value as $kc => $vc) {
@@ -96,7 +113,7 @@ class Helper{
          if ($helper[0] === 'get') {
             unset($helper[0]);
             $json = json_decode(file_get_contents($dir),true);
-            $utilsArr = new \pctco\php\utils\Arr;
+            $utilsArr = self::utilsArr();
             return $utilsArr->findLadderNode($json,$helper);
          }
          return false;
