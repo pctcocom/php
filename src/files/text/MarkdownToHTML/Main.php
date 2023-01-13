@@ -1813,14 +1813,16 @@ class Main{
                     if ($this->config->ad !== false && !empty($this->config->ad['keys'][0])) {
                         if ($this->elementIncremental > $this->config->ad['keys'][0]) {
                             $ad = $this->config->ad['list'][$this->config->ad['keys'][0]];
+                            if ($ad->display === true) {
+                                $adModelTemplate = file_get_contents($this->config->model->dir.'AD-'.$ad->adsense.'-'.$ad->size.'.html');
 
-                            $adModelTemplate = file_get_contents($this->config->model->dir.'AD-'.$ad->adsense.'-'.$ad->size.'.html');
+                                $replace = [
+                                    '{$id}' =>  $ad->id
+                                ];
 
-                            $replace = [
-                                '{$id}' =>  $ad->id
-                            ];
-
-                            $markup = $markup.str_replace(array_keys($replace),array_values($replace),$adModelTemplate);
+                                $markup = $markup.str_replace(array_keys($replace),array_values($replace),$adModelTemplate);
+                            }
+                            
 
                             unset($this->config->ad['keys'][0]);
                             $this->config->ad['keys'] = array_values($this->config->ad['keys']);
