@@ -26,7 +26,7 @@ class Tools {
     public function query($request){
         return Helper::request($request,[
             'code'  =>  'error_code',
-            'msg'   =>' error_msg'
+            'msg'   =>  'error_msg'
         ],'api::baidu::tongji');
     }
 }

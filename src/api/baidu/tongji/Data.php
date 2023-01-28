@@ -50,19 +50,19 @@ class Data extends Tools{
         $items = $result['data']['result']['items'];
         
         foreach ($fields as $k => $v) {
-        $datasetsData = [];
-        foreach ($items[1] as $value) {
-            $datasetsData[] = $value[$k];
-        }
-    
-        $datasets[] = [
-            'label'  => $v['name'],
-            'backgroundColor' => $v['color'],
-            'borderColor'  => $v['color'],
-            'data'   => $datasetsData,
-            'borderWidth' => 1,
-            'fill'   => false
-        ]; 
+            $datasetsData = [];
+            foreach ($items[1] as $value) {
+                $datasetsData[] = $value[$k];
+            }
+        
+            $datasets[] = [
+                'label'  => $v['name'],
+                'backgroundColor' => $v['color'],
+                'borderColor'  => $v['color'],
+                'data'   => $datasetsData,
+                'borderWidth' => 1,
+                'fill'   => false
+            ]; 
         }
 
         $result['chart'] = [
