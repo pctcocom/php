@@ -29,6 +29,7 @@ class Helper{
          ],
          'orm'  => [
             'redis'  => new \pctco\php\orm\redis\Tools,
+            'elastic'  => new \pctco\php\orm\elastic\Tools,
          ],
          'api' => [
             'baidu'   => [
@@ -79,14 +80,14 @@ class Helper{
             'system_message'    =>  'The GuzzleHttp request failed. Procedure'
          ];
       }
-      
+
       if (!empty($results[$error['code']])) {
          return [
             'status'    =>  'error',
             'code'  =>  $results[$error['code']],
             'tips'   => 'error',
             'message'   => self::errorCode($results[$error['code']],$app),
-            'system_message'    =>  $results[$results[$error['msg']]]
+            'system_message'    =>  $results[$error['msg']]
          ];
       }
       
