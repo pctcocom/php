@@ -32,9 +32,10 @@ class Data{
                 $this->_orderSelect = $orderk.':'.$orderv;
             }
         }else{
-            $order['id'] = [
-                'order' =>  'desc'
-            ];
+            // $order['id'] = [
+            //     'order' =>  'desc'
+            // ];
+            $order = [];
             $this->_orderSelect = 'id:desc';
         }
 
