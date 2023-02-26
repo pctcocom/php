@@ -24,6 +24,7 @@ class Helper{
             'ip'  => new \pctco\php\request\ip\Tools,
          ],
          'files'  => new \pctco\php\files\Tools,
+         'spider'  => new \pctco\php\spider\Tools,
          'safety' => [
             'algorithm'  => new \pctco\php\safety\algorithm\Tools,
          ],

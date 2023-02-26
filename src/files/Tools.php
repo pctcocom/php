@@ -7,6 +7,9 @@ class Tools{
             'text'   =>  [
                 'MarkdownToHTML'   =>  new text\MarkdownToHTML\Apps,
                 'HTMLToMarkdown'  =>  new text\HTMLToMarkdown\Apps
+            ],
+            'file' =>  [
+                'utils'  =>  new file\Utils
             ]
         ];
         return Helper::utilsArr()->obj($utils[$apps]);
