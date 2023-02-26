@@ -85,8 +85,7 @@ class Sitemap{
     */
    public function generate($select,$name){
       $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-      $xml .= "<urlset>\n";
-
+      $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
       foreach ($select as $items) {
          $xml .= $this->xml([
             'items'  => $items,
