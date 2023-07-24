@@ -27,7 +27,7 @@ class Str{
         return $result;
     }
 
-    public static function only(int $type = 0,int $length = 18,int $time=0){
+    public function only(int $type = 0,int $length = 18,int $time=0){
 		$str = $time == 0 ? '':date('YmdHis',time());
 	    switch ($type) {
 	        case 0:

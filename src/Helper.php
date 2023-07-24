@@ -18,6 +18,7 @@ class Helper{
          'utils' => [
             'Arr' => $utilsArr,
             'Str' => new \pctco\php\utils\Str,
+            'Request' => new \pctco\php\utils\Request,
             'Date' => new \pctco\php\utils\Date
          ],
          'request'  => [
@@ -27,6 +28,7 @@ class Helper{
          'spider'  => new \pctco\php\spider\Tools,
          'safety' => [
             'algorithm'  => new \pctco\php\safety\algorithm\Tools,
+            'verify' => new \pctco\php\safety\Verify
          ],
          'orm'  => [
             'redis'  => new \pctco\php\orm\redis\Tools,

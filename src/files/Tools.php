@@ -6,7 +6,8 @@ class Tools{
         $utils = [
             'text'   =>  [
                 'MarkdownToHTML'   =>  new text\MarkdownToHTML\Apps,
-                'HTMLToMarkdown'  =>  new text\HTMLToMarkdown\Apps
+                'HTMLToMarkdown'  =>  new text\HTMLToMarkdown\Apps,
+                'html'  =>  new text\html\Apps
             ],
             'file' =>  [
                 'utils'  =>  new file\Utils
