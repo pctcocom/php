@@ -1,20 +1,34 @@
 <?php
 namespace pctco\php\utils;
 class Request{
-    /** 
-     ** 获取server参数
-     *? @date 22/12/14 16:32
-     * @param  string $name 数据名称
-     * @param  string $default 默认值
-     *! @return mixed
-     */
-    public function server(string $name = '', string $default = ''){
-        if (empty($name)) {
-            return $this->server;
-        } else {
-            $name = strtoupper($name);
+    public function domain(string $url = '') :array {
+        $parse = parse_url($url);
+  
+        $host = '';
+        $secondary = '';
+  
+        if (!empty($parse['host'])) {
+           $array = explode('.',$parse['host']);
+           if (count($array) === 3) {
+              $host = $array[1].'.'.$array[2];
+              $secondary = $parse['host'];
+           }else{
+              $host = $parse['host'];
+           }
         }
-
-        return $this->server[$name] ?? $default;
+  
+        return [
+           'host'   => $host,
+           'secondary' => $secondary
+        ];
     }
+    public function removeParam(string $url = '',string $symbol = '?') :String {
+        $pos = strpos($url,$symbol);
+        if ($pos !== false) {
+            $param = substr($url,$pos);
+            $url = str_replace($param,'',$url,$count);
+            return $url;
+        }
+        return $url;
+     }
 }

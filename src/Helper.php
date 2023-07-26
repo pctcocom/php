@@ -103,7 +103,7 @@ class Helper{
          'data'  =>  $results
       ];
    }
-   public static function config(string $helper = 'get'){
+   public static function config($helper = 'get'){
       $dir = self::dataPath('extend.json');
 
       /** 
@@ -113,26 +113,25 @@ class Helper{
        */
       if (is_string($helper)) {
          $helper = explode('::',$helper);
+         $utilsArr = self::utilsArr();
 
          if ($helper[0] === 'get') {
             unset($helper[0]);
             $json = json_decode(file_get_contents($dir),true);
-            $utilsArr = self::utilsArr();
             return $utilsArr->findLadderNode($json,$helper);
          }
          return false;
       }
 
-      
-
       /** 
-       ** set extend_config.json
+       ** set extend.json
        *? @date 22/12/21 20:54
        *! @return boolean
        */
-      if (!empty($helper)) {
-         file_put_contents($dir,json_encode($helper));
-         return true;
+      if (is_object($helper)) {
+         $data = json_encode($helper);
+         file_put_contents($dir,$data);
+         return $data;
       }
       return false;
    }
