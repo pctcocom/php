@@ -10,7 +10,9 @@ class Tools{
                 'html'  =>  new text\html\Apps
             ],
             'file' =>  [
-                'utils'  =>  new file\Utils
+                'utils'  =>  new file\Utils,
+                'CRUD'  =>  new file\CRUD,
+                'picture'  =>  new file\Picture,
             ]
         ];
         return Helper::utilsArr()->obj($utils[$apps]);
