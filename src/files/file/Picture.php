@@ -11,7 +11,8 @@ class Picture{
         $this->file = trim($file);
         $this->config = Helper::config('get::file::cloud::storage');
         $this->pctco = Helper::pctco([
-            'utils' =>  ['Arr']
+            'utils' =>  ['Arr','Request'],
+            'safety'    =>  ['verify']
         ]);
         $this->entranceDir = $this->pctco->app->path->entrance;
         return $this;
@@ -20,7 +21,7 @@ class Picture{
      ** 保存图片
      *? @date 23/07/11 09:44
      *  @param String $savePath		保存路径  如 uploads/temp/
-     *  @param Array $date    保存路径日期 ['y','m','d'] 或 [] 则不使用日期
+     *  @param Array $date    保存路径日期 ['y','m','d'] 或 false 则不使用日期
      *  @param Boolean $fileName	保存的文件名称(默认md5)  true = 自动生成文件名 , 字符串 'test-name'
      *  @param Boolean $curl		获取远程文件所采用的方法
      *  @param Boolean $enableNotCloudStorage    是否强制开启或关闭对象存储桶模式
@@ -123,9 +124,12 @@ class Picture{
          *? @date 23/07/11 11:18
          */
         $saveDate = '';
-        foreach ($options->date as $v) {
-            $saveDate .= date($v).'/';
+        if (is_array($options->date)) {
+            foreach ($options->date as $v) {
+                $saveDate .= date($v).'/';
+            }
         }
+        
         $savePath = $this->entranceDir.'/'.$options->savePath.$saveDate;
         if(!file_exists($savePath) && !mkdir($savePath,0777,true)){
             return [
@@ -189,6 +193,13 @@ class Picture{
             ]
         ];
     }
+    public function base64(){
+        if ($this->pctco->safety->verify->open($this->file)->rule('html.href.link')->check()) {
+            return $this->imageToBase64();
+        }else{
+            return $this->base64ToImage($vars);
+        }
+    }
     /** 
      ** 保存base64数据为图片
      *? @date 23/07/11 13:11
@@ -210,17 +221,17 @@ class Picture{
         
 
         $options = $this->pctco->utils->Arr->obj($options);
-
+        
 		//匹配出图片的格式
-        $regexp = new \pctco\php\safety\verify\Regexp;
-        $result = $regexp->open($this->file)->check('format.img.base64');
-        if ($result !== false){
-            // 格式 png
-            $ext = $result[2];
-            if ($ext === 'svg+xml') $ext = 'svg';
+        $result = $this->pctco->safety->verify->open($this->file)->rule('format.img.base64')->find();
 
-            if ($fileName === true) {
-                $fileName = md5(time().rand(1,99999999)).'.'.$ext;
+        if (!empty($result[2][0])){
+            // 格式 png
+            $ext = $result[2][0];
+            if ($ext === 'svg+xml') $ext = 'svg';
+            $abc = '88888';
+            if ($options->fileName === true) {
+                $fileName = md5(time().rand(1,999999999)).'.'.$ext;
             }else{
                 $fileName = $options->fileName.'.'.$ext;
             }
@@ -250,12 +261,11 @@ class Picture{
 
                 if ($options->enableNotCloudStorage) {
                     if ($this->config->use === 1) {
-                        $storage = new cloud\storage\Processor();
+                        $storage = new cloud\storage\Processor($this->config);
                         $upload = $storage->upload($options->savePath.$saveDate.$fileName);
                         if ($upload === true) {
                             $absolute = $this->config->domain.$absolute;
-                            $fileObject = new File($savePath);
-                            $fileObject->delete();
+                            $this->pctco->files->utils('file')->utils->open($savePath,[])->delete();
                         }
                     }
                 }
@@ -267,11 +277,11 @@ class Picture{
                     'message'   => 'Data request success',
                     'system_message'    =>  'Data request success',
                     'data'  =>  [
-                        'date'=>$saveDate,
-                        'name'=>$fileName,
-                        'file'=>[
+                        'date'  =>  $saveDate,
+                        'name'  =>  $fileName,
+                        'file'  =>  [
                             'relative'   =>   $saveDate.$fileName,
-                            'system'   =>   $savePath.$fileName,
+                            'system'   =>   $savePath,
                             'absolute'   =>   $absolute,
                         ]
                     ]
@@ -303,11 +313,11 @@ class Picture{
      *! @return base64
      */
     public function imageToBase64() {
-        $isImg = new Regexp($this->file);
-        $image = $isImg->RemoveUrlParam();
+        $image = $this->pctco->utils->Request->removeParam($this->file);
+        $checkUrl = $this->pctco->safety->verify->open($this->file)->rule('html.href.link')->check();
+
         $base64 = '';
-        $http = preg_match("/^http(s)?:\\/\\/.+/",$image);
-        if($http){
+        if($checkUrl){
             $link = $this->open($image)->save([
                 'path'   => 'uploads/temp/',
                 'date'   => ['y','m'],
@@ -324,9 +334,8 @@ class Picture{
 
         $base64 = 'data:' . $info['mime'] . ';base64,' . chunk_split(base64_encode($data));
 
-        if ($http) {
-            $fileObject = new File($image);
-            $fileObject->delete();
+        if ($checkUrl) {
+            $this->pctco->files->utils('file')->utils->open($image,[])->delete();
         }
         return $base64;
     }

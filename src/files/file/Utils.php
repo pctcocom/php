@@ -27,6 +27,16 @@ class Utils{
 
         return $this;
     }
+    public function getPathname(){
+        return $this->file->getPathname();
+    }
+    public function isAbsolute(){
+        $filepath = $this->getPathname();
+        if (isset($filepath[0]) && $filepath[0] == '/') {
+            return true;
+        }
+        return false;
+    }
     public function exists(){
         $return = false;
         if ($this->file->isFile() || $this->file->isDir()) $return = true;
@@ -108,6 +118,9 @@ class Utils{
             ]
         ]);
     }
+    public function isLink(){
+        return $this->file->isLink();
+    }
     public function isFile(){
         return $this->file->isFile();
     }
@@ -141,5 +154,20 @@ class Utils{
     public function clear(){
         $this->obj->ftruncate(0);
         return $this;
+    }
+    public function delete(){
+        if ($this->isAbsolute()) {
+            if ($this->isFile()) {
+                // 删除文件和符号链接
+                return unlink($this->getPathname());
+            } elseif ($this->isDir()) {
+                // 删除目录
+                return rmdir($this->getPathname());
+            }
+            return false;
+        } else {
+            // 给定的文件路径不是绝对路径
+            return false;
+        }
     }
 }

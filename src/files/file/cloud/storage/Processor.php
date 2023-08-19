@@ -8,14 +8,14 @@ class Processor{
    **/
    function __construct($config){
       switch ($config->app) {
-         case 'AliyunOss':
-            $this->client = new Aliyun($config->AliyunOss);
+         case 'aliyunOss':
+            $this->client = new Aliyun($config->objectStorage->aliyunOss);
             break;
-         case 'BaiDuCloudBos':
-            $this->client = new BaiDu($config->BaiDuCloudBos);
+         case 'baiDuCloudBos':
+            $this->client = new BaiDu($config->objectStorage->baiDuCloudBos);
             break;
-         case 'TencentCloudCos':
-            $this->client = new Tencent($config->TencentCloudCos);
+         case 'tencentCloudCos':
+            $this->client = new Tencent($config->objectStorage->tencentCloudCos);
             break;
 
          default:

@@ -40,6 +40,7 @@ class Verify{
     }
     public function find(){
         preg_match_all($this->rule,$this->data,$result);
+        return empty($result)?false:$result;
         $result = empty($result[1]) ? [] : array_unique($result[1]);
         return empty($result)?false:$result;
     }

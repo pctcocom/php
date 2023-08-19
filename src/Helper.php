@@ -44,7 +44,8 @@ class Helper{
       $pctco = [
          'app' => [
             'path'   => [
-               'root'   => $app->getRootPath
+               'root'   => $app->getRootPath,
+               'entrance' => $app->getEntrancePath
             ]
          ]
       ];
